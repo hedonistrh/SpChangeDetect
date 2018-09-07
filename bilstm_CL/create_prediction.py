@@ -186,3 +186,7 @@ def create_prediction(filename,
                delimiter=' ', fmt='%1.3f')
 
     return (prediction_array, prediction_array_msec_smooth)
+
+if __name__ == "__main__":
+    train_model(sys.argv[1], sys.argv[2],
+                sys.argv[3], sys.argv[4])
