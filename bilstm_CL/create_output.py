@@ -37,6 +37,9 @@ def create_output(filename, shape, boost,
     changes = [x.strip() for x in content]
 
     for change in changes:
+        # If txt file include values with second, 
+        # firstly we need to convert to milisecond
+
         change_ms = float(change) * 1000
         change_frame = (change_ms - win_len) / hop
         

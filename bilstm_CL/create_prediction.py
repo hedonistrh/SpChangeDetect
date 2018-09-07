@@ -1,9 +1,10 @@
 import more_itertools as mit
 import numpy as np
+from keras.models import load_model
 from create_numpy_for_audio import create_numpy_for_audio
 
 def create_prediction(filename, 
-                    threshold, model, 
+                    threshold, 
                     featureplan, overlapping = False):
     
     """"It takes audio file and create prediction via lstm system. If output exceeds
@@ -12,7 +13,6 @@ def create_prediction(filename,
     Arguments:
     filename= Which file will be considered.
     threshold: If prediction exceed this value, we will say there is speaker change
-    model: System will create prediction
     featureplan: Which txt will be used for yaafe feature extraction.
     
     Outputs:
@@ -24,6 +24,9 @@ def create_prediction(filename,
     win_len=25
     hop=10
     prediction_vector = []
+
+    model = create_model()
+    model.load_weights("bilstm_weights_2DCNN.h5")
 
     feature_vector = np.load("./feature_storage/" + filename + ".npy")
     
