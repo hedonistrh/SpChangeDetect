@@ -25,6 +25,9 @@ def load_training_data(root_dir,
     input_array = []
     output = []
     
+    from_file = int(from_file)
+    to_file = int(to_file)
+
     for ix in range(from_file, to_file):
         feature_vector = np.load(root_dir[ix]) 
         feature_array = np.ravel(feature_vector)
