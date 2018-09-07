@@ -1,1 +1,0 @@
-mels: MelSpectrum blockSize=400 stepSize=160
