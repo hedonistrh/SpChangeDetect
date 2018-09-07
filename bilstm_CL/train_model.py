@@ -23,7 +23,7 @@ def train_model(root_dir, featureplan,
     epoch: How many epoch.
     """
 
-    model = create_model()
+    model = create_model(featureplan)
 
     input_array, output_array = load_training_data(root_dir=root_dir,
                                 from_file=from_file,
@@ -49,7 +49,6 @@ def train_model(root_dir, featureplan,
     input_array_specified = np.asarray(input_array_specified)
 
 
-    input_array_specified = np.expand_dims(input_array_specified, axis=4)
     model.fit(input_array_specified, output_array_specified,
         epochs=int(epoch),
         batch_size=2,

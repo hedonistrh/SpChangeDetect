@@ -1,45 +1,50 @@
 import more_itertools as mit
 import numpy as np
+import sys
 from keras.models import load_model
 from create_numpy_for_audio import create_numpy_for_audio
+from create_model import create_model
 
-def create_prediction(filename, 
-                    threshold, 
-                    featureplan):
+def create_prediction(filename, featureplan, threshold=0.3):
     
     """"It takes audio file and create prediction via lstm system. If output exceeds
     threshold, we will say there is speaker change.
     
     Arguments:
     filename= Which file will be considered.
+    hop: Hop length (we need it for Librosa)
+    win_len: Window length (we need it for Librosa)
     threshold: If prediction exceed this value, we will say there is speaker change
+    lstm_system: System will create prediction
     featureplan: Which txt will be used for yaafe feature extraction.
+    sr: Sample rate of audio input.
     
     Outputs:
     prediction_array: It stores prediction value for each frame
     prediction_array_rav: Ravel version of prediction array. We will use it.
     prediction_array_ms = It stores which milisecond we have speaker change point.
     """
-
-    win_len=25
-    hop=10
+    lstm_system = create_model(featureplan)
+    lstm_system.load_weights("bilstm_weights_2DCNN.h5")    
     prediction_vector = []
-
-    model = create_model()
-    model.load_weights("bilstm_weights_2DCNN.h5")
-
-    feature_vector = np.load("./feature_storage/" + filename + ".npy")
     
+    win_len = 25
+    hop = 10
+       
+    feature_vector = np.load("./feature_storage/" + filename + ".npy")
+                                                       
     ix_frame = 0
     
     
-    while (ix_frame+799<matrix_of_single_audio.shape[0]):        
-    
-        prediction = model.predict(np.expand_dims(prediction_vector[ix_frame:ix_frame+800], axis=0))
-        
+    print (feature_vector.shape[0])
+
+    while (ix_frame+799<feature_vector.shape[0]):        
+
+        prediction = lstm_system.predict(np.expand_dims(feature_vector[ix_frame:ix_frame+800], axis=0))
+
         prediction_vector.append(prediction)
         ix_frame += 800
-    
+
     prediction_vector = np.asarray(prediction_vector)
     print (prediction_vector.shape)
 
@@ -51,7 +56,8 @@ def create_prediction(filename,
     ix_frame_pred = 0
 
     for pred in prediction_array:
-        if (pred > threshold):
+        print (pred)
+        if (pred > float(threshold)):
             ms_version = float(win_len + (ix_frame_pred * hop)) # milisecond version to represent end point of first embed            
             prediction_array_msec.append(int(ms_version))
             prediction_array_sec.append(ms_version/1000)
@@ -82,16 +88,19 @@ def create_prediction(filename,
                 mean_s[which_turn] = ((start_time+end_time) / 2)
                 mean_s = np.delete(mean_s, which_turn-1)
                 which_turn -= 1
-                
+
         except:
             pass
 
-np.savetxt(fname="./prediction_txt/" + filename + "_prediction.txt", 
-            X=prediction_array_msec_smooth, 
-            delimiter=' ', fmt='%1.3f')
+                
+    # https://codereview.stackexchange.com/questions/5196/grouping-consecutive-numbers-into-ranges-in-python-3-2
 
-return (prediction_array, prediction_array_msec_smooth)
+    np.savetxt(fname="./prediction_txt/" + filename + "_prediction.txt", 
+               X=prediction_array_msec_smooth, 
+               delimiter=' ', fmt='%1.3f')
+
+    return (prediction_array, prediction_array_msec_smooth)
 
 if __name__ == "__main__":
     create_prediction(sys.argv[1], sys.argv[2],
-                sys.argv[3], sys.argv[4])
+			sys.argv[3])
