@@ -55,7 +55,7 @@ def train_model(root_dir, featureplan,
         shuffle=False)
     # if you use big batch_size, you will
     # have a problem about memory.
-    model.save_weights('bilstm_weights_2DCNN.h5')    
+    model.save_weights('bilstm_weights.h5')    
 
     input_array = []
     output_array = []

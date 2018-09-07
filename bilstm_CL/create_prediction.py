@@ -25,7 +25,7 @@ def create_prediction(filename, featureplan, threshold=0.3):
     prediction_array_ms = It stores which milisecond we have speaker change point.
     """
     lstm_system = create_model(featureplan)
-    lstm_system.load_weights("bilstm_weights_2DCNN.h5")    
+    lstm_system.load_weights("bilstm_weights.h5")    
     prediction_vector = []
     
     win_len = 25
