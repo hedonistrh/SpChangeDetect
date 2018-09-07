@@ -1,5 +1,6 @@
 from load_training_data import load_training_data
 from create_model import create_model 
+import sys
 
 def train_model(root_dir, featureplan,
                 from_file, to_file,
