@@ -1,6 +1,7 @@
 from load_training_data import load_training_data
 from create_model import create_model 
 import sys
+import numpy as np
 
 def train_model(root_dir, featureplan,
                 from_file, to_file,
@@ -50,10 +51,11 @@ def train_model(root_dir, featureplan,
 
     input_array_specified = np.expand_dims(input_array_specified, axis=4)
     model.fit(input_array_specified, output_array_specified,
-        epochs=epoch,
-        batch_size=16,
+        epochs=int(epoch),
+        batch_size=2,
         shuffle=False)
-
+    # if you use big batch_size, you will
+    # have a problem about memory.
     model.save_weights('bilstm_weights_2DCNN.h5')    
 
     input_array = []

@@ -1,5 +1,7 @@
 import numpy as np
 from create_output import create_output
+import glob
+import os 
 
 def load_training_data(root_dir,
                     from_file, to_file, 
@@ -27,6 +29,8 @@ def load_training_data(root_dir,
     
     from_file = int(from_file)
     to_file = int(to_file)
+    root_dir = glob.glob(os.path.join(root_dir,
+                                    "*npy"))
 
     for ix in range(from_file, to_file):
         feature_vector = np.load(root_dir[ix]) 

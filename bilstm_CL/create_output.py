@@ -23,6 +23,7 @@ def create_output(filename, shape, boost,
     # you can follow my github repo to understand 
     win_len = 25
     hop = 10
+    how_many = int(how_many)
 
     output_array = np.zeros(shape)
 
@@ -36,8 +37,8 @@ def create_output(filename, shape, boost,
     changes = [x.strip() for x in content]
 
     for change in changes:
-        
-        change_frame = (int(change) - win_len) / hop
+        change_ms = float(change) * 1000
+        change_frame = (change_ms - win_len) / hop
         
         ## Also you can use this frame as a center.
         # change_frame = int(change) / hop

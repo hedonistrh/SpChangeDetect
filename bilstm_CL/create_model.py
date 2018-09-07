@@ -13,7 +13,7 @@ import time
 
 def create_model():
 
-    frame_shape = (480, 40, 1)
+    frame_shape = (800, 40, 1)
 
     input_frame = keras.Input(frame_shape, name='main_input')
 
