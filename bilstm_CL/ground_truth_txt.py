@@ -6,7 +6,7 @@ def ground_truth_txt(mdtm_file):
     It will save the txt file in the txt_files folder.
     
     Arguments:
-    mdtm_file: Which mdtm_file will be considered."""
+    mdtm_file: Which mdtm file will be considered."""
 
     change_time_array = []
     

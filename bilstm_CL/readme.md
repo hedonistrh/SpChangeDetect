@@ -1,9 +1,17 @@
 At this method, we use BiLSTM based DNN. To reproduce the results:
 
 - Firstly, we need to create a folder which stores the numpy array which represent the features of wav files. 
+
     - These wav files should be 16000 Hz. 
     - We use 25 ms as a window length and 10 ms as a hop length.
-
+    ``` sh
+    mkdir feature_storage
+    ```
+    - Now, we can extract features.
+    ``` sh
+        python3 feature_extraction root_dir featureplan
+        ```
+        
 - Now, we need to create the ground truth text files. For that, we need to download .mdtm files for AMI corpus. 
 ``` sh
 !wget https://raw.githubusercontent.com/pyannote/pyannote-db-odessa-ami/master/AMI/data/speaker_diarization/dev.mdtm

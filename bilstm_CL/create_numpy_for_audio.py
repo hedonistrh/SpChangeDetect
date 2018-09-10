@@ -8,7 +8,9 @@ def create_numpy_for_audio(audio_file, featureplan):
     Its arguments:
     audio_file: Path of audio file, it can be wav, mp3, ogg etc.
     featureplan: Text file which introduce which features will be extracted.
-
+        Available options: 
+            - pyannote_based
+            - mfcc
     """
     
     if (featureplan=="pyannote_based.txt"):
