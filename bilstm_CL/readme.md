@@ -30,15 +30,9 @@ bash ./Anaconda3-5.2.0-Linux-x86_64.sh -b -f -p /usr/local
 
     - Now, we can extract features.
     ``` sh
-<<<<<<< HEAD
         python3 feature_extraction root_dir featureplan
 
         python3 feature_extraction "./ami_corpus/*/audio/" "mfcc.txt" {example usage}
-=======
-        python3 feature_extraction.py root_dir featureplan
-
-        python3 feature_extraction.py "./ami_corpus/*/audio/" "mfcc.txt" {example usage}
->>>>>>> 34be8e1f8e3a985a21fc02494e2f6ef010dd65cc
     ```
         
 - Now, we need to create the ground truth text files. For that, we need to download .mdtm files for AMI corpus. 
@@ -66,7 +60,7 @@ Now, we can train the system.
 ``` sh
 python3 train_model.py root_dir featureplan how_many_repeat how_many_step boost how_many_boost fuzzy epoch 
 
-python3 train_model.py "./feature_storage/" "mfcc.txt" 1 30 True 120 True 5 {example usage}
+python3 train_model.py "./feature_storage/" "mfcc.txt" 10 30 True 120 True 2 {example usage}
 ```
 
 Now, we can create the prediction.
@@ -82,8 +76,4 @@ python2 metadata_converter.py input_directory output_directory --outputType=mpeg
 
 python2 metadata_converter.py testdata/ami_pred out/ami_mpeg7_pred --outputType=mpeg7 --inputType=txt_file {example usage}
 
-<<<<<<< HEAD
 ```
-=======
-```
->>>>>>> 34be8e1f8e3a985a21fc02494e2f6ef010dd65cc
