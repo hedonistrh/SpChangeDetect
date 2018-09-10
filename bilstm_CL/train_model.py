@@ -38,7 +38,7 @@ def train_model(root_dir, featureplan,
 
     while(ix_repeat < how_many_repeat):
         ix_repeat += 1
-        print ("Repeat: ", how_many_repeat)
+        print ("Repeat: ", ix_repeat)
 
         ix_step = 0
 
@@ -47,7 +47,7 @@ def train_model(root_dir, featureplan,
         print (to_file)
 
         while(ix_step < how_many_step):
-            print ("Step: ", how_many_step)
+            print ("Step: ", ix_step)
 
             input_array, output_array = load_training_data(root_dir=root_dir,
                                         from_file=from_file,

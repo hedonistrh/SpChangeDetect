@@ -38,7 +38,7 @@ def load_training_data(root_dir,
         input_array.extend(feature_array)
 
         filename_txt = (str(root_dir[ix]).split("/")[-1])[:-3] + "txt"
-        output_array = create_output("./outputs_txt/" + filename_txt, 
+        output_array = create_output("./txt_files/" + filename_txt, 
                                           shape=feature_vector.shape[0],
                                           boost=boost,
                                           how_many=how_many,
