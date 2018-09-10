@@ -1,6 +1,19 @@
-At this method, we use BiLSTM based DNN. To reproduce the results:
+At this method, we use BiLSTM based DNN. To reproduce the results (at Linux):
 
-- Firstly, we need to create a folder which stores the numpy array which represent the features of wav files. 
+- Firstly, we install Anaconda. Currently (13.08.2018), final version is 5.2.0
+``` sh
+wget -c https://repo.continuum.io/archive/Anaconda3-5.2.0-Linux-x86_64.sh
+chmod +x Anaconda3-5.2.0-Linux-x86_64.sh
+bash ./Anaconda3-5.2.0-Linux-x86_64.sh -b -f -p /usr/local
+```
+
+- To use same conda environment.
+``` sh
+    conda create --name bilstm --file spec-file.txt
+    source activate bilstm
+```
+
+- We need to create a folder which stores the numpy array which represent the features of wav files. 
 
     - These wav files should be 16000 Hz. 
     - We use 25 ms as a window length and 10 ms as a hop length.
@@ -18,6 +31,7 @@ At this method, we use BiLSTM based DNN. To reproduce the results:
     - Now, we can extract features.
     ``` sh
         python3 feature_extraction root_dir featureplan
+
         python3 feature_extraction "./ami_corpus/*/audio/" "mfcc.txt" {example usage}
     ```
         
@@ -41,14 +55,25 @@ python3 ground_truth_txt.py dev.mdtm
 python3 ground_truth_txt.py trn.mdtm
 python3 ground_truth_txt.py tst.mdtm
 ```
-Now, we can train the system. Example usage:
+Now, we can train the system. 
 
 ``` sh
-python3 train_model.py "./feature_storage/" "mfcc.txt" 0 4 True 120 True 5
+python3 train_model.py root_dir featureplan how_many_repeat how_many_step boost how_many_boost fuzzy epoch 
+
+python3 train_model.py "./feature_storage/" "mfcc.txt" 1 30 True 120 True 5 {example usage}
 ```
 
 Now, we can create the prediction.
 
 ``` sh
 python3 create_prediction.py EN2001b "mfcc.txt" 0.7
+```
+
+Lastly, to convert from txt to internal metadata format.
+
+``` sh
+python2 metadata_converter.py input_directory output_directory --outputType=mpeg7 --inputType=txt_file
+
+python2 metadata_converter.py testdata/ami_pred out/ami_mpeg7_pred --outputType=mpeg7 --inputType=txt_file {example usage}
+
 ```

@@ -7,7 +7,7 @@ import numpy as np
 
 def train_model(root_dir, featureplan,
                 how_many_repeat, how_many_step,
-                boost, how_many, fuzzy,
+                boost, how_many_boost, fuzzy,
                 epoch):
 
     """To train the DL model. 
@@ -53,7 +53,7 @@ def train_model(root_dir, featureplan,
                                         from_file=from_file,
                                         to_file=to_file,
                                         featureplan=featureplan,
-                                        boost=boost, how_many=how_many,
+                                        boost=boost, how_many=how_many_boost,
                                         fuzzy=fuzzy)
             
             max_len = 800 # how many frame will be taken for one block. It have to 
