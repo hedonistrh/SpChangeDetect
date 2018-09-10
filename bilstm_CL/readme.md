@@ -8,24 +8,33 @@ At this method, we use BiLSTM based DNN. To reproduce the results:
     mkdir feature_storage
     ```
 
+    - If you do not have AMI Corpus, you need to download.
+    ``` sh
+    wget http://groups.inf.ed.ac.uk/ami/download/temp/amiBuild-125026-Mon-Sep-10-2018.wget.sh
+    chmod +x amiBuild-125026-Mon-Sep-10-2018.wget.sh
+    ./amiBuild-125026-Mon-Sep-10-2018.wget.sh
+    ```
+
     - Now, we can extract features.
     ``` sh
         python3 feature_extraction root_dir featureplan
+        python3 feature_extraction "./ami_corpus/*/audio/" "mfcc.txt" {example usage}
     ```
         
 - Now, we need to create the ground truth text files. For that, we need to download .mdtm files for AMI corpus. 
 ``` sh
-!wget https://raw.githubusercontent.com/pyannote/pyannote-db-odessa-ami/master/AMI/data/speaker_diarization/dev.mdtm
+wget https://raw.githubusercontent.com/pyannote/pyannote-db-odessa-ami/master/AMI/data/speaker_diarization/dev.mdtm
 
-!wget https://raw.githubusercontent.com/pyannote/pyannote-db-odessa-ami/master/AMI/data/speaker_diarization/trn.mdtm
+wget https://raw.githubusercontent.com/pyannote/pyannote-db-odessa-ami/master/AMI/data/speaker_diarization/trn.mdtm
 
-!wget https://raw.githubusercontent.com/pyannote/pyannote-db-odessa-ami/master/AMI/data/speaker_diarization/tst.mdtm
+wget https://raw.githubusercontent.com/pyannote/pyannote-db-odessa-ami/master/AMI/data/speaker_diarization/tst.mdtm
 ```
 
 And create a empty folder to stores these .txt files.
 ``` sh
 mkdir txt_files
 ``` 
+
  After that, we will run these command.
 ``` sh
 python3 ground_truth_txt.py dev.mdtm
