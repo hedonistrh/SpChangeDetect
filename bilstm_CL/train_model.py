@@ -4,7 +4,7 @@ import sys
 import numpy as np
 
 def train_model(root_dir, featureplan,
-                from_file, to_file,
+                how_many_repeat, how_many_step,
                 boost, how_many, fuzzy,
                 epoch):
 
@@ -13,54 +13,77 @@ def train_model(root_dir, featureplan,
     Arguments:
     root_dir: Where numpy array is stored.
     featureplan: Which featureplan will be used
-    from_file: Index for first file.
-    to_file: Index for last file.
+    how_many_repeat: Epoch for all files.
+    how_many_step: We need to divide to all files into subfolder package. This 
+        represent that one package include how many file 
     boost: Boolean value. If it is True, we will consider neighboor frames of 
         change frame as a change frame.
     how_many= If boost is True, how many neighboor frames should be considered
         as a change frame.
     fuzzy: If it is true, we will use fuzzy labelling to reflect neighboor frames.
-    epoch: How many epoch.
+    epoch: How many epoch for one subfolder package.
     """
 
     model = create_model(featureplan)
 
-    input_array, output_array = load_training_data(root_dir=root_dir,
-                                from_file=from_file,
-                                to_file=to_file,
-                                featureplan=featureplan,
-                                boost=boost, how_many=how_many,
-                                fuzzy=fuzzy)
+    how_many_file = len(root_dir)
+
+    how_many_step = int(how_many_step)
+    how_many_repeat = int(how_many_repeat)
+
+    ix_repeat = 0 # index
+
+    while(ix_repeat < how_many_repeat):
+        ix_repeat += 1
+        print ("Repeat: ", repeat)
+
+        ix_step = 0
+
+        from_file = 0
+
+        while(ix_step < how_many_step):
+            print ("Step: ", step)
+
+            input_array, output_array = load_training_data(root_dir=root_dir,
+                                        from_file=from_file,
+                                        to_file=to_file,
+                                        featureplan=featureplan,
+                                        boost=boost, how_many=how_many,
+                                        fuzzy=fuzzy)
+            
+            max_len = 800 # how many frame will be taken for one block. It have to 
+                        # be same with model's input frame's first parameter.
+
+            step = 800    # step size.
+
+            input_array_specified = []
+            output_array_specified = []
+
+            for i in range (0, input_array.shape[0]-max_len, step):
+                single_input_specified = (input_array[i:i+max_len,:])
+                single_output_specified = (output_array[i:i+max_len,:])
+
+                input_array_specified.append(single_input_specified)
+                output_array_specified.append(single_output_specified)
+
+            output_array_specified = np.asarray(output_array_specified)
+            input_array_specified = np.asarray(input_array_specified)
+
+
+            model.fit(input_array_specified, output_array_specified,
+                epochs=int(epoch),
+                batch_size=2,
+                shuffle=False)
+            # if you use big batch_size, you will
+            # have a problem about memory.
+            model.save_weights('bilstm_weights.h5')    
+
+            input_array = []
+            output_array = []
     
-    max_len = 800 # how many frame will be taken
-    step = 800 # step size.
-
-    input_array_specified = []
-    output_array_specified = []
-
-    for i in range (0, input_array.shape[0]-max_len, step):
-        single_input_specified = (input_array[i:i+max_len,:])
-        single_output_specified = (output_array[i:i+max_len,:])
-
-        input_array_specified.append(single_input_specified)
-        output_array_specified.append(single_output_specified)
-
-    output_array_specified = np.asarray(output_array_specified)
-    input_array_specified = np.asarray(input_array_specified)
-
-
-    model.fit(input_array_specified, output_array_specified,
-        epochs=int(epoch),
-        batch_size=2,
-        shuffle=False)
-    # if you use big batch_size, you will
-    # have a problem about memory.
-    model.save_weights('bilstm_weights.h5')    
-
-    input_array = []
-    output_array = []
-    
-
+            from_file += how_many_file/(how_many_step)
+            to_file += (from_file + (how_many_file/(how_many_step)))
+            
 
 if __name__ == "__main__":
     train_model(sys.argv[1], sys.argv[2],
