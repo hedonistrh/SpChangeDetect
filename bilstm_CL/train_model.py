@@ -1,6 +1,8 @@
 from load_training_data import load_training_data
 from create_model import create_model 
 import sys
+import glob
+import os
 import numpy as np
 
 def train_model(root_dir, featureplan,
@@ -26,7 +28,8 @@ def train_model(root_dir, featureplan,
 
     model = create_model(featureplan)
 
-    how_many_file = len(root_dir)
+    how_many_file = len(glob.glob(os.path.join(root_dir, "*npy")))
+    print ("Total File :", how_many_file)
 
     how_many_step = int(how_many_step)
     how_many_repeat = int(how_many_repeat)
@@ -35,14 +38,16 @@ def train_model(root_dir, featureplan,
 
     while(ix_repeat < how_many_repeat):
         ix_repeat += 1
-        print ("Repeat: ", repeat)
+        print ("Repeat: ", how_many_repeat)
 
         ix_step = 0
 
         from_file = 0
+        to_file = how_many_file/(how_many_step)
+        print (to_file)
 
         while(ix_step < how_many_step):
-            print ("Step: ", step)
+            print ("Step: ", how_many_step)
 
             input_array, output_array = load_training_data(root_dir=root_dir,
                                         from_file=from_file,
