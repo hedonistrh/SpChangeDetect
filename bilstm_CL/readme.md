@@ -7,6 +7,7 @@ At this method, we use BiLSTM based DNN. To reproduce the results:
     ``` sh
     mkdir feature_storage
     ```
+
     - Now, we can extract features.
     ``` sh
         python3 feature_extraction root_dir featureplan
