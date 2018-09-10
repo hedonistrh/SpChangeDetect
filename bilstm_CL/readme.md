@@ -10,7 +10,7 @@ At this method, we use BiLSTM based DNN. To reproduce the results:
     - Now, we can extract features.
     ``` sh
         python3 feature_extraction root_dir featureplan
-        ```
+    ```
         
 - Now, we need to create the ground truth text files. For that, we need to download .mdtm files for AMI corpus. 
 ``` sh

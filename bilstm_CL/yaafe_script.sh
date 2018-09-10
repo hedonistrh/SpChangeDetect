@@ -1,0 +1,1 @@
+yaafe -c $featureplan -r 16000 $audio_file -p Precision=6 -p Metadata=False -n
