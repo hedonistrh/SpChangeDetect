@@ -74,14 +74,18 @@ def train_model(root_dir, featureplan,
             output_array_specified = np.asarray(output_array_specified)
             input_array_specified = np.asarray(input_array_specified)
 
-
-            model.fit(input_array_specified, output_array_specified,
-                epochs=int(epoch),
-                batch_size=2,
-                shuffle=False)
-            # if you use big batch_size, you will
-            # have a problem about memory.
-            model.save_weights('bilstm_weights.h5')    
+            try:
+                model.fit(input_array_specified, output_array_specified,
+                    epochs=int(epoch),
+                    batch_size=2,
+                    shuffle=False)
+                # if you use big batch_size, you will
+                # have a problem about memory.
+                model.save_weights('bilstm_weights.h5')    
+            except FileNotFoundError:
+                print ('Probably, corresponding text file is not in the directory.')
+                print ('Pass this epoch.')
+                pass
 
             input_array = []
             output_array = []
