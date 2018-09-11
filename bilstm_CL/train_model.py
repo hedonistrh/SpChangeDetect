@@ -87,6 +87,9 @@ def train_model(root_dir, featureplan,
                 print ('Probably, corresponding text file is not in the directory.')
                 print ('Pass this epoch.')
                 pass
+            except IndexError:
+                print ('Index Error')
+                pass
 
             
             
