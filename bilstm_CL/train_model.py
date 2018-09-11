@@ -48,45 +48,46 @@ def train_model(root_dir, featureplan,
 
         while(ix_step < how_many_step):
             print ("Step: ", ix_step)
-
-            input_array, output_array = load_training_data(root_dir=root_dir,
+            try:
+                input_array, output_array = load_training_data(root_dir=root_dir,
                                         from_file=from_file,
                                         to_file=to_file,
                                         featureplan=featureplan,
                                         boost=boost, how_many=how_many_boost,
                                         fuzzy=fuzzy)
             
-            max_len = 800 # how many frame will be taken for one block. It have to 
-                        # be same with model's input frame's first parameter.
+                max_len = 800 # how many frame will be taken for one block. It have to 
+                            # be same with model's input frame's first parameter.
 
-            step = 800    # step size.
+                step = 800    # step size.
 
-            input_array_specified = []
-            output_array_specified = []
+                input_array_specified = []
+                output_array_specified = []
 
-            for i in range (0, input_array.shape[0]-max_len, step):
-                single_input_specified = (input_array[i:i+max_len,:])
-                single_output_specified = (output_array[i:i+max_len,:])
+                for i in range (0, input_array.shape[0]-max_len, step):
+                    single_input_specified = (input_array[i:i+max_len,:])
+                    single_output_specified = (output_array[i:i+max_len,:])
 
-                input_array_specified.append(single_input_specified)
-                output_array_specified.append(single_output_specified)
+                    input_array_specified.append(single_input_specified)
+                    output_array_specified.append(single_output_specified)
 
-            output_array_specified = np.asarray(output_array_specified)
-            input_array_specified = np.asarray(input_array_specified)
+                output_array_specified = np.asarray(output_array_specified)
+                input_array_specified = np.asarray(input_array_specified)
 
-            try:
                 model.fit(input_array_specified, output_array_specified,
                     epochs=int(epoch),
                     batch_size=2,
                     shuffle=False)
                 # if you use big batch_size, you will
                 # have a problem about memory.
-                model.save_weights('bilstm_weights.h5')    
+                model.save_weights('bilstm_weights.h5')   
             except FileNotFoundError:
                 print ('Probably, corresponding text file is not in the directory.')
                 print ('Pass this epoch.')
                 pass
 
+            
+            
             input_array = []
             output_array = []
     
