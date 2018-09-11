@@ -55,6 +55,12 @@ python3 ground_truth_txt.py dev.mdtm
 python3 ground_truth_txt.py trn.mdtm
 python3 ground_truth_txt.py tst.mdtm
 ```
+
+We need to delete some feature numpy files which has not corresponding txt files.
+``` sh
+python3 txt_checker ./feature_storage/ ./txt_files/
+```
+
 Now, we can train the system. 
 
 ``` sh
