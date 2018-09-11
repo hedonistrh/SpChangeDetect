@@ -28,7 +28,7 @@ bash ./Anaconda3-5.2.0-Linux-x86_64.sh -b -f -p /usr/local
     ./amiBuild-125026-Mon-Sep-10-2018.wget.sh
     ```
 
-    - Now, we can extract features.
+    - Now, we can extract features. You can use "mfcc.txt" or "pyannote_based.txt" as a featureplan.
     ``` sh
         python3 feature_extraction root_dir featureplan
 

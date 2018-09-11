@@ -31,6 +31,8 @@ def train_model(root_dir, featureplan,
     how_many_file = len(glob.glob(os.path.join(root_dir, "*npy")))
     print ("Total File :", how_many_file)
 
+    # If we want to load all AMI corpus directly to the RAM, we will have
+    # the memory problem. So that, we divide to parts.
     how_many_step = int(how_many_step)
     how_many_repeat = int(how_many_repeat)
 
