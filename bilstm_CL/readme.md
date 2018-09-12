@@ -30,9 +30,9 @@ bash ./Anaconda3-5.2.0-Linux-x86_64.sh -b -f -p /usr/local
 
     - Now, we can extract features. You can use "mfcc.txt" or "pyannote_based.txt" as a featureplan.
     ``` sh
-        python3 feature_extraction root_dir featureplan
+        python3 feature_extraction.py root_dir featureplan
 
-        python3 feature_extraction "./ami_corpus/*/audio/" "mfcc.txt" {example usage}
+        python3 feature_extraction.py "./ami_corpus/*/audio/" "mfcc.txt" {example usage}
     ```
         
 - Now, we need to create the ground truth text files. For that, we need to download .mdtm files for AMI corpus. 
@@ -58,7 +58,7 @@ python3 ground_truth_txt.py tst.mdtm
 
 We need to delete some feature numpy files which has not corresponding txt files.
 ``` sh
-python3 txt_checker ./feature_storage/ ./txt_files/
+python3 txt_checker.py ./feature_storage/ ./txt_files/
 ```
 
 Now, we can train the system. 
