@@ -1,5 +1,9 @@
-import subprocess
+
+import subprocess as sub
 import sys
+import os
+import numpy as np
+from numpy import genfromtxt
 
 def create_numpy_for_audio(audio_file, featureplan):
     """This function is based on YAAFE. It will return 2D Array which is features of audio file. 
@@ -8,11 +12,16 @@ def create_numpy_for_audio(audio_file, featureplan):
     Its arguments:
     audio_file: Path of audio file, it can be wav, mp3, ogg etc.
     featureplan: Text file which introduce which features will be extracted.
-
+        Available options: 
+            - pyannote_based
+            - mfcc
     """
     
     if (featureplan=="pyannote_based.txt"):
-        subprocess.Popen("!yaafe -c $featureplan -r $sr $audio_file -p Precision=6 -p Metadata=False -n")
+        cmd = "yaafe -c " + featureplan + " -r 16000 "  + audio_file + " -p Precision=6 -p Metadata=False -n"
+        print (cmd)
+	
+        os.system(cmd)
         filename = (audio_file.split("/")[-1]).split(".")[0]
 
         my_data = genfromtxt(audio_file + ".mfcc.csv", delimiter=',')
@@ -35,7 +44,10 @@ def create_numpy_for_audio(audio_file, featureplan):
         return my_data
 
     elif (featureplan=="mfcc.txt"):
-        subprocess.Popen("!yaafe -c $featureplan -r $sr $audio_file -p Precision=6 -p Metadata=False -n")
+        cmd = "yaafe -c " + featureplan + " -r 16000 "  + audio_file + " -p Precision=6 -p Metadata=False -n"
+        print (cmd)
+	
+        os.system(cmd)
         filename = (audio_file.split("/")[-1]).split(".")[0]
 
         my_data = genfromtxt(audio_file + ".mels.csv", delimiter=',')
@@ -44,6 +56,7 @@ def create_numpy_for_audio(audio_file, featureplan):
         np.save('./feature_storage/' + filename, my_data)
 
         return my_data
+
     else:
         print ("""System is compatible with just mfcc and pyannote_based feature extraction. 
             If you want to create

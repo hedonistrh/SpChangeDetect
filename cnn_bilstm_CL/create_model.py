@@ -68,8 +68,9 @@ def create_model(featureplan):
 
 	model = Model(input_frame, tdistributed_2)
 
-	Adagrad = keras.optimizers.Adagrad(lr=0.01, epsilon=None, decay=0.0)
 
-	Nadam = keras.optimizers.Nadam(lr=0.0003, beta_1=0.9, beta_2=0.999, epsilon=0.00001, schedule_decay=0.0002)
+	Nadam = keras.optimizers.Nadam(lr=0.0007, beta_1=0.9, beta_2=0.999, epsilon=0.00001, schedule_decay=0.0002)
 
 	model.compile(loss='binary_crossentropy', optimizer="Nadam", metrics=['accuracy'])
+
+	return model
