@@ -10,7 +10,7 @@ def ground_truth_txt(mdtm_file):
 
     change_time_array = []
     
-    with open(main_set) as f:
+    with open(mdtm_file) as f:
         content = f.readlines()
     content = [x.strip() for x in content] 
     tmp_filename = content[0].split(' ')[0]
