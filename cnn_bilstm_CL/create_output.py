@@ -26,7 +26,7 @@ def create_output(filename, shape, boost,
     how_many = int(how_many)
 
     output_array = np.zeros(shape)
-    filename = filename[:-4] + "_full_time" + filename[-4:]
+    filename = filename[:-4] + "_change_time" + filename[-4:]
     try:
         with open(filename) as f:
             content = f.readlines()
