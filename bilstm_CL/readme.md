@@ -32,7 +32,7 @@ bash ./Anaconda3-5.2.0-Linux-x86_64.sh -b -f -p /usr/local
     ``` sh
         python3 feature_extraction.py root_dir featureplan
 
-        python3 feature_extraction.py "./ami_corpus/*/audio/" "mfcc.txt" {example usage}
+        python3 feature_extraction.py "./amicorpus/*/audio/" "mfcc.txt" {example usage}
     ```
         
 - Now, we need to create the ground truth text files. For that, we need to download .mdtm files for AMI corpus. 
