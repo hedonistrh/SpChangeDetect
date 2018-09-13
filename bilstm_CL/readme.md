@@ -21,7 +21,7 @@ bash ./Anaconda3-5.2.0-Linux-x86_64.sh -b -f -p /usr/local
     mkdir feature_storage
     ```
 
-    - If you do not have AMI Corpus, you need to download.
+    - If you do not have AMI Corpus, you need to download. (If this script do not work, you can create your own sh file. Firstly, you need to go [official website](http://groups.inf.ed.ac.uk/ami/download/). After that, you should choose all files and Headset mix for these files. After that, you will have your own sh file)
     ``` sh
     wget http://groups.inf.ed.ac.uk/ami/download/temp/amiBuild-125026-Mon-Sep-10-2018.wget.sh
     chmod +x amiBuild-125026-Mon-Sep-10-2018.wget.sh
